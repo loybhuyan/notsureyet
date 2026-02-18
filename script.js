@@ -1,3 +1,5 @@
+console.log('System: script.js is active.');
+
 const audio = document.getElementById('bgMusic');
 const button = document.getElementById('audioToggle');
 const statusText = document.getElementById('statusText');
@@ -9,10 +11,14 @@ visualizer.style.display = 'none';
 vinyls.forEach(v => v.style.animationPlayState = 'paused');
 
 button.addEventListener('click', () => {
+    console.log('User Action: Vibe button clicked.');
+    
     if (audio.paused) {
-        statusText.innerText = 'Loading Yummy Gummy...';
+        statusText.innerText = 'Syncing the groove...';
+        
         audio.play().then(() => {
-            button.innerText = '? STOP THE RHYTHM';
+            console.log('Success: Audio playing.');
+            button.innerText = 'Pause';
             statusText.innerText = 'Now Playing: Yummy Gummy';
             visualizer.style.display = 'flex';
             vinyls.forEach(v => v.style.animationPlayState = 'running');
@@ -22,13 +28,16 @@ button.addEventListener('click', () => {
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             document.querySelector('.psychedelic-bg').style.background = conic-gradient(from 0deg, , #000, );
         }).catch(error => {
-            console.error("Audio playback failed:", error);
-            alert("Error: File 'Yummy Gummy.mp3' not found in your project folder!");
-            statusText.innerText = 'Error loading file.';
+            console.error('Error: Playback failed.', error);
+            statusText.innerText = 'Error: Check the console.';
+            // Fallback for some browsers: try to load the audio first
+            audio.load();
+            audio.play();
         });
     } else {
+        console.log('User Action: Pausing audio.');
         audio.pause();
-        button.innerText = '? FEEL THE VIBE';
+        button.innerText = 'Vibe!';
         statusText.innerText = 'Music Paused';
         visualizer.style.display = 'none';
         vinyls.forEach(v => v.style.animationPlayState = 'paused');

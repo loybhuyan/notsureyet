@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feel The Rhythm - Yummy Gummy Edition</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Small styling update for the status message */
+        #statusDisplay {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 210, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #00d2ff;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+    </style>
 </head>
 <body>
     <div class="psychedelic-bg"></div>
@@ -22,32 +34,72 @@
 
         <div class="decks">
             <div class="deck left">
-                <div class="vinyl"></div>
+                <div class="vinyl" id="vinylL"></div>
             </div>
             <div class="mixer">
                 <div class="fader"></div>
                 <div class="fader"></div>
-                <div class="fader)</div>
+                <div class="fader"></div>
             </div>
             <div class="deck right">
-                <div class="vinyl"></div>
+                <div class="vinyl" id="vinylR"></div>
             </div>
         </div>
 
-        <div class="visualizer" id="visualizer">
+        <div class="visualizer" id="viz">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
 
-        <button id="audioToggle">? FEEL THE VIBE</button>
-        <p id="statusText" style="margin-top: 15px; font-size: 0.8rem; color: var(--neon-cyan); opacity: 0.8;">Click to start the journey</p>
+        <button id="vibeBtn">Vibe!</button>
+        <div id="statusDisplay">System Ready. Click "Vibe!" to start.</div>
     </div>
 
-    <!-- Audio Player (Updated for MP3) -->
-    <audio id="bgMusic" loop>
+    <!-- The Audio Player -->
+    <audio id="player" loop>
         <source src="Yummy Gummy.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
-    <script src="script.js"></script>
+    <script>
+        // All logic is now inside the HTML for maximum reliability
+        const audio = document.getElementById('player');
+        const btn = document.getElementById('vibeBtn');
+        const status = document.getElementById('statusDisplay');
+        const visualizer = document.getElementById('viz');
+        const vL = document.getElementById('vinylL');
+        const vR = document.getElementById('vinylR');
+
+        // Hide visualizer and pause vinyls at start
+        visualizer.style.display = 'none';
+        vL.style.animationPlayState = 'paused';
+        vR.style.animationPlayState = 'paused';
+
+        btn.onclick = function() {
+            if (audio.paused) {
+                status.innerText = "Attempting to play...";
+                
+                // Force a reload to make sure the browser sees the file
+                audio.load();
+                
+                audio.play().then(() => {
+                    status.innerText = "Playing: Yummy Gummy. Enjoy!";
+                    btn.innerText = "Pause";
+                    visualizer.style.display = "flex";
+                    vL.style.animationPlayState = "running";
+                    vR.style.animationPlayState = "running";
+                }).catch((err) => {
+                    status.innerText = "Error: " + err.message;
+                    console.error("Play failed:", err);
+                });
+            } else {
+                audio.pause();
+                status.innerText = "Music Paused.";
+                btn.innerText = "Vibe!";
+                visualizer.style.display = "none";
+                vL.style.animationPlayState = "paused";
+                vR.style.animationPlayState = "paused";
+            }
+        };
+    </script>
 </body>
 </html>
