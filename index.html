@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feel The Rhythm</title>
+    <title>Feel The Rhythm - Yummy Gummy Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
     <div class="dj-booth-container">
         <header>
             <h1>Feel The Rhythm</h1>
-            <p>Sync your soul to the digital heartbeat.</p>
+            <p>Now Playing: Yummy Gummy</p>
         </header>
 
         <div class="decks">
@@ -27,19 +27,26 @@
             <div class="mixer">
                 <div class="fader"></div>
                 <div class="fader"></div>
-                <div class="fader"></div>
+                <div class="fader)</div>
             </div>
             <div class="deck right">
                 <div class="vinyl"></div>
             </div>
         </div>
 
-        <div class="visualizer">
+        <div class="visualizer" id="visualizer">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
 
-        <button id="dropBeat">? FEEL THE VIBE</button>
+        <button id="audioToggle">? FEEL THE VIBE</button>
+        <p id="statusText" style="margin-top: 15px; font-size: 0.8rem; color: var(--neon-cyan); opacity: 0.8;">Click to start the journey</p>
     </div>
+
+    <!-- Audio Player (Updated for MP3) -->
+    <audio id="bgMusic" loop>
+        <source src="Yummy Gummy.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script src="script.js"></script>
 </body>
