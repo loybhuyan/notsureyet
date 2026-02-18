@@ -1,107 +1,193 @@
+:root {
+    --neon-pink: #ff00ff;
+    --neon-cyan: #00ffff;
+    --neon-lime: #39ff14;
+    --deep-space: #050510;
+}
+
 body {
-    background: radial-gradient(circle, #1e1e2f 0%, #0d0d14 100%);
-    color: #e0e0e0;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
     margin: 0;
     overflow: hidden;
+    background: var(--deep-space);
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
 }
 
-.container {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.05);
+/* Psychedelic Background Animation */
+.psychedelic-bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        #ff00ff, #00ffff, #39ff14, #ffff00, #ff0000, #ff00ff
+    );
+    filter: blur(80px) opacity(0.3);
+    animation: rotateBg 15s linear infinite;
+    z-index: -2;
+}
+
+@keyframes rotateBg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Laser Effects */
+.lasers {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.laser {
+    position: absolute;
+    width: 200%;
+    height: 2px;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 20px var(--neon-cyan);
+    opacity: 0.5;
+    transform-origin: left;
+}
+
+.laser:nth-child(1) { top: 20%; animation: laserSweep 4s infinite alternate; background: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink); }
+.laser:nth-child(2) { top: 50%; animation: laserSweep 6s infinite alternate-reverse; }
+.laser:nth-child(3) { top: 80%; animation: laserSweep 5s infinite alternate; background: var(--neon-lime); box-shadow: 0 0 20px var(--neon-lime); }
+
+@keyframes laserSweep {
+    from { transform: rotate(-20deg) translateX(-10%); }
+    to { transform: rotate(20deg) translateX(0%); }
+}
+
+/* DJ Booth Styling */
+.dj-booth-container {
+    background: rgba(10, 10, 20, 0.8);
     padding: 40px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    max-width: 400px;
+    border-radius: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 255, 255, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
 }
 
-.vinyl-record {
-    width: 80px;
-    height: 80px;
-    background: #111;
-    border-radius: 50%;
-    margin: 0 auto 20px;
+h1 {
+    font-size: 3rem;
+    background: linear-gradient(to right, var(--neon-pink), var(--neon-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    margin: 0;
+}
+
+/* The Decks */
+.decks {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.vinyl {
+    width: 120px;
+    height: 120px;
+    background: repeating-radial-gradient(circle, #111, #000 2px);
     border: 4px solid #333;
+    border-radius: 50%;
+    animation: rotate 2s linear infinite;
     position: relative;
-    animation: rotate 3s linear infinite;
-    background-image: repeating-radial-gradient(circle, #222, #111 2px);
+    box-shadow: 0 0 15px rgba(0,0,0,1);
 }
 
-.vinyl-record::after {
+.vinyl::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    background: #ff4757;
+    width: 30px;
+    height: 30px;
+    background: var(--neon-pink);
     border-radius: 50%;
+    box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.mixer {
+    display: flex;
+    gap: 10px;
+}
+
+.fader {
+    width: 10px;
+    height: 60px;
+    background: #222;
+    border-radius: 5px;
+    position: relative;
+}
+
+.fader::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: -5px;
+    width: 20px;
+    height: 10px;
+    background: #666;
+    border-radius: 3px;
+}
+
+/* Visualizer */
+.visualizer {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    height: 60px;
+    margin-bottom: 30px;
+}
+
+.visualizer span {
+    width: 10px;
+    background: var(--neon-cyan);
+    animation: bounce 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+    from { height: 10px; transform: scaleY(1); }
+    to { height: 60px; transform: scaleY(1.2); }
+}
+
+.visualizer span:nth-child(even) { background: var(--neon-pink); animation-duration: 0.6s; }
+
+button {
+    background: transparent;
+    border: 3px solid var(--neon-lime);
+    color: var(--neon-lime);
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    text-shadow: 0 0 10px var(--neon-lime);
+    box-shadow: 0 0 20px var(--neon-lime), inset 0 0 10px var(--neon-lime);
+    transition: 0.3s;
+}
+
+button:hover {
+    background: var(--neon-lime);
+    color: black;
+    box-shadow: 0 0 40px var(--neon-lime);
 }
 
 @keyframes rotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-}
-
-h1 {
-    font-size: 2.5rem;
-    color: #00d2ff;
-    margin: 10px 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.visualizer {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    height: 30px;
-    margin: 20px 0;
-}
-
-.visualizer span {
-    width: 6px;
-    background: #00d2ff;
-    border-radius: 3px;
-    animation: bounce 0.5s ease-in-out infinite alternate;
-}
-
-.visualizer span:nth-child(2) { animation-delay: 0.1s; background: #3a7bd5; }
-.visualizer span:nth-child(3) { animation-delay: 0.2s; background: #ff4757; }
-.visualizer span:nth-child(4) { animation-delay: 0.3s; background: #3a7bd5; }
-.visualizer span:nth-child(5) { animation-delay: 0.4s; background: #00d2ff; }
-
-@keyframes bounce {
-    from { height: 10px; }
-    to { height: 30px; }
-}
-
-button {
-    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-    border: none;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin-top: 10px;
-}
-
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
-}
-
-button:active {
-    transform: scale(0.95);
 }
